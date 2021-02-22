@@ -1,6 +1,7 @@
 //! Easy error handling in Rust.
 
 #![warn(missing_docs, rust_2018_idioms)]
+#![feature(backtrace)]
 
 /// Core code for the diagnostic builder.
 pub mod diagnostics;

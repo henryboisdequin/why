@@ -1,3 +1,5 @@
+use std::backtrace::Backtrace;
+
 /// Error type which holds all of the errors information.
 #[derive(PartialEq, Debug)]
 pub struct Error<'err> {
@@ -13,11 +15,13 @@ pub struct Error<'err> {
     pub file: Option<&'err str>,
     /// The line in which the error occurred.
     pub line: Option<usize>,
+    /// Whether to display a stack backtrace or not.
+    pub debug: bool,
 }
 
 impl<'err> Error<'err> {
     /// Returns a new default `Error`.
-    pub fn new() -> Self {
+    pub fn new(debug: bool) -> Self {
         Self {
             message: "",
             help_msgs: None,
@@ -25,6 +29,7 @@ impl<'err> Error<'err> {
             code: None,
             file: None,
             line: None,
+            debug,
         }
     }
 
@@ -61,5 +66,14 @@ impl<'err> Error<'err> {
     pub fn add_file_and_line(&mut self, file: &'err str, line: usize) {
         self.file = Some(file);
         self.line = Some(line);
+    }
+
+    /// Shows the backtrace of the error.
+    pub fn show_backtrace(self) -> Option<Backtrace> {
+        if self.debug {
+            Some(Backtrace::capture())
+        } else {
+            None
+        }
     }
 }
