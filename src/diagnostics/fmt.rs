@@ -20,6 +20,11 @@ impl Display for Error<'_> {
             diagnostic.push_str(&format!("error: {}\n", self.message));
         }
 
+        // Adds file and line information to the diagnostic
+        if let (Some(file), Some(line)) = (self.file, self.line) {
+            diagnostic.push_str(&format!("cause: {}:{}\n", file, line));
+        }
+
         // The helpful notes of the given error.
         // E.g.
         // ```
@@ -40,11 +45,6 @@ impl Display for Error<'_> {
             for help_msg in help_msgs {
                 diagnostic.push_str(&format!("help: {}\n", help_msg));
             }
-        }
-
-        // Adds file and line information to the diagnostic
-        if let (Some(file), Some(line)) = (self.file, self.line) {
-            diagnostic.push_str(&format!("code didn't compile: {}:{}", file, line));
         }
 
         // Write the whole diagnostic to the formatter

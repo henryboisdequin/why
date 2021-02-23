@@ -1,0 +1,5 @@
+error[101]: fail
+cause: /Users/henryboisdequin/Desktop/why/src/tests/ui/simple_error.rs:8
+note: it failed
+
+aborting due to the previous error

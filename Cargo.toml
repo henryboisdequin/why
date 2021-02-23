@@ -5,3 +5,6 @@ authors = ["Henry Boisdequin <boisdequinhenry19@gmail.com>"]
 edition = "2018"
 
 [dependencies]
+
+[dev-dependencies]
+trybuild = "1.0.41"
